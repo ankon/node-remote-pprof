@@ -1,0 +1,41 @@
+{
+  "name": "node-remote-pprof",
+  "version": "0.0.1",
+  "description": "Support for google-perftools remote profiling with NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo 'No tests (yet)'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ankon/node-remote-pprof.git"
+  },
+  "keywords": [
+    "NodeJS",
+    "express",
+    "connect",
+    "google",
+    "perftools",
+    "pprof",
+    "profile"
+  ],
+  "author": "Andreas Kohn <andreas.kohn@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ankon/node-remote-pprof/issues"
+  },
+  "homepage": "https://github.com/ankon/node-remote-pprof#readme",
+  "dependencies": {
+    "bindings": "^1.3.0",
+    "lodash": "^4.17.10",
+    "nan": "^2.10.0",
+    "router": "^1.3.2",
+    "tmp": "0.0.33"
+  },
+  "devDependencies": {
+    "eslint": "^5.0.1",
+    "eslint-config-collaborne": "^1.3.1",
+    "finalhandler": "^1.1.1",
+    "uuid": "^3.3.2"
+  }
+}
