@@ -8,8 +8,9 @@ const finalhandler = require('finalhandler');
 const Router = require('router');
 const uuidV4 = require('uuid/v4');
 
-const {pprof} = require('..');
+const pprof = require('..');
 const router = Router();
+
 router.use('/pprof', pprof());
 router.get('/endpoint', (req, res) => {
 	// Generate some traffic: Calculate 5000 uuids, return them all.

@@ -326,6 +326,4 @@ function pprof() {
 	return router;
 }
 
-module.exports = {
-	pprof,
-};
+module.exports = pprof;
