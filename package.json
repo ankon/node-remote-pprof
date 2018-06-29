@@ -4,6 +4,7 @@
   "description": "Support for google-perftools remote profiling with NodeJS",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint index.js sample",
     "test": "echo 'No tests (yet)'"
   },
   "repository": {
