@@ -137,6 +137,11 @@ function resolveAddressesWithPerf(addresses) {
 				// Load these, and sort them ascending.
 				// Note that it is possible that a later symbol overwrites an earlier one, so we have to check whether the
 				// index _before_ or _after_ would be overlapping the new symbol, and if so remove these.
+
+				// TODO: Make this overwriting optional
+				// For looking up the symbol "right now" the overwriting is the correct approach. But, when looking at profiles
+				// taken over an amount of time (either multiple heap profiles, or a cpu profile), we will see likely see multiple versions
+				// of the same symbol, depending on whether and how often it got moved between those profiles.
 				const sortedSymbolSpecs = [];
 				const perfMapLineMatcher = /([0-9a-f]+) ([0-9a-f]+) ([^ ]+)( (.+))?/;
 				data.split('\n').forEach(line => {
