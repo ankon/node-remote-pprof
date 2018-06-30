@@ -1,6 +1,6 @@
 # node-remote-pprof
 
-Library that implements the google-perftools remote interface as a Express/Connect-compatible router.
+Library that implements the [google-perftools remote interface](http://gperftools.github.io/gperftools/pprof_remote_servers.html) as a Express/Connect-compatible router.
 
 ## Installation
 
@@ -34,6 +34,8 @@ npm install --save node-remote-pprof
    ```sh
    pprof --web localhost:3000
    ```
+   
+   Note: Either the original `pprof` or [the go version](https://github.com/google/pprof) should work here.
 
 ## Environment
 
