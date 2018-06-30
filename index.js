@@ -328,6 +328,9 @@ function pprof() {
 	router.get('/cmdline', getCmdline);
 	router.get('/symbol', getNumSymbols);
 	router.post('/symbol', postSymbol);
+
+	// Note: The golang pprof remote support uses different paths:
+	// /symbolz: same as /pprof/symbol
 	return router;
 }
 
