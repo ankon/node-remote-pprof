@@ -7,3 +7,5 @@
 *.rej
 *.porig
 
+isolate-*-v8.log
+
