@@ -108,7 +108,7 @@ async function atos(addresses) {
 	return symbols;
 }
 
-function resolveAddressesWithPerf(addresses) {
+function resolveAddressesWithPerf(addresses, {merge} = {merge: false}) {
 	return new Promise((resolve, reject) => {
 		const symbols = {};
 		const perfMapPath = `/tmp/perf-${process.pid}.map`;
@@ -141,7 +141,6 @@ function resolveAddressesWithPerf(addresses) {
 				// Note that it is possible that a later symbol overwrites an earlier one, so we have to check whether the
 				// index _before_ or _after_ would be overlapping the new symbol, and if so remove these.
 
-				// TODO: Make this overwriting optional
 				// For looking up the symbol "right now" the overwriting is the correct approach. But, when looking at profiles
 				// taken over an amount of time (either multiple heap profiles, or a cpu profile), we will see likely see multiple versions
 				// of the same symbol, depending on whether and how often it got moved between those profiles.
@@ -158,12 +157,18 @@ function resolveAddressesWithPerf(addresses) {
 						};
 						let insertAt = sortedIndexBy(sortedSymbolSpecs, newSymbolSpec, symbolSpec => symbolSpec.start);
 						let deleteCount = 0;
-						if (insertAt > 0 && sortedSymbolSpecs[insertAt - 1].start + sortedSymbolSpecs[insertAt - 1].len > newSymbolSpec.start) {
-							insertAt--;
-							deleteCount++;
-						}
-						while (insertAt + deleteCount + 1 < sortedSymbolSpecs.length && overlaps(sortedSymbolSpecs[insertAt + deleteCount + 1], newSymbolSpec)) {
-							deleteCount++;
+						if (merge) {
+							if (insertAt > 0 && sortedSymbolSpecs[insertAt - 1].start + sortedSymbolSpecs[insertAt - 1].len > newSymbolSpec.start) {
+								insertAt--;
+								deleteCount++;
+							}
+							while (insertAt + deleteCount + 1 < sortedSymbolSpecs.length && overlaps(sortedSymbolSpecs[insertAt + deleteCount + 1], newSymbolSpec)) {
+								deleteCount++;
+							}
+						} else if (insertAt + 1 < sortedSymbolSpecs.length && newSymbolSpec.start === sortedSymbolSpecs[insertAt + 1].start) {
+							// Guarantee at most one symbol per address.
+							logger.warn(`Symbol ${newSymbolSpec.symbol} moved over previous symbol ${sortedSymbolSpecs[insertAt + 1].symbol} at ${newSymbolSpec.start}, but not merging`);
+							deleteCount = 1;
 						}
 						sortedSymbolSpecs.splice(insertAt, deleteCount, newSymbolSpec);
 					}
