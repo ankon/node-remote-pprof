@@ -85,6 +85,8 @@ async function addr2line(addresses) {
 	return symbols;
 }
 
+// Implementation node: Parsing is rough and based on handwaving.
+// XXX: Also look at https://github.com/google/pprof/issues/351 and try to follow their implementation (or provide it)
 async function atos(addresses) {
 	const output = await spawnHelper('atos', ['-p', process.pid, ...addresses]);
 
