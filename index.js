@@ -245,6 +245,7 @@ function getHeap(req, res) {
 		res.statusCode = 200;
 		res.end(profile);
 	} catch (err) {
+		logger.warn(`Cannot get heap profile: ${err.message}`);
 		res.statusCode = 500;
 		res.end(err.message);
 	}
@@ -256,6 +257,7 @@ function getGrowth(req, res) {
 		res.statusCode = 200;
 		res.end(heapGrowthStacks);
 	} catch (err) {
+		logger.warn(`Cannot get growth profile: ${err.message}`);
 		res.statusCode = 500;
 		res.end(err.message);
 	}
@@ -267,6 +269,7 @@ function getProfile(req, res) {
 	// TODO: Check whether the profiler is currently running
 	tmpName((err, path) => {
 		if (err) {
+			logger.warn(`Cannot create profile: ${err.message}`);
 			res.statusCode = 500;
 			res.end(err.message);
 			return;
