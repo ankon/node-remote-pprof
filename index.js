@@ -275,7 +275,12 @@ function getProfile(req, res) {
 			return;
 		}
 
-		gperftools.ProfilerStart(path);
+		if (!gperftools.ProfilerStart(path)) {
+			logger.warn('Cannot start profiling');
+			res.statusCode = 500;
+			res.end('Cannot start profiling');
+			return;
+		}
 		setTimeout(() => {
 			gperftools.ProfilerStop();
 			pump(fs.createReadStream(path), res);
