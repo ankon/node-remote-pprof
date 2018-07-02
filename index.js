@@ -13,6 +13,8 @@ const {spawn} = require('child_process');
 const {tmpName} = require('tmp');
 const {sortedIndexBy} = require('lodash');
 
+const pump = require('pump');
+
 const Router = require('router');
 
 const logger = require('@log4js-node/log4js-api').getLogger('pprof');
@@ -273,7 +275,7 @@ function getProfile(req, res) {
 		gperftools.ProfilerStart(path);
 		setTimeout(() => {
 			gperftools.ProfilerStop();
-			fs.createReadStream(path).pipe(res);
+			pump(fs.createReadStream(path), res);
 		}, query.seconds * 1000);
 	});
 }
