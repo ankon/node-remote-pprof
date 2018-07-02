@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/ankon/node-remote-pprof#readme",
   "dependencies": {
+    "@log4js-node/log4js-api": "^1.0.0",
     "bindings": "^1.3.0",
     "lodash": "^4.17.10",
     "nan": "^2.10.0",

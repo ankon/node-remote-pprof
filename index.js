@@ -15,6 +15,8 @@ const {sortedIndexBy} = require('lodash');
 
 const Router = require('router');
 
+const logger = require('@log4js-node/log4js-api').getLogger('pprof');
+
 /** Map of resolved addresses to symbols (function name, or location, or empty if unknown) */
 const symbolCache = new Map();
 
@@ -213,8 +215,12 @@ async function resolveAddresses(addresses) {
 
 	const {symbols, missingAddresses} = await resolveAddressesWithPerf(newAddresses);
 	if (missingAddresses.length > 0) {
-		const resolvedSymbols = process.platform === 'darwin' ? await atos(missingAddresses) : await addr2line(missingAddresses);
-		Object.assign(symbols, resolvedSymbols);
+		try {
+			const resolvedSymbols = process.platform === 'darwin' ? await atos(missingAddresses) : await addr2line(missingAddresses);
+			Object.assign(symbols, resolvedSymbols);
+		} catch (err) {
+			logger.warn(`Cannot resolve ${missingAddresses.length} symbols: ${err.message}`);
+		}
 	}
 
 	Object.keys(symbols).forEach(address => {
