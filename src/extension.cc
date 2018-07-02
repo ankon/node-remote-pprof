@@ -84,10 +84,10 @@ NAN_METHOD(ProfilerGetCurrentState) {
   gperftools::ProfilerGetCurrentState(&state);
 
   Local<Object> obj = Nan::New<Object>();
-  obj->Set(Nan::New<String>("enabled").ToLocalChecked(), Nan::New<Boolean>(state.enabled != 0));
-  obj->Set(Nan::New<String>("startTime").ToLocalChecked(), Nan::New<Date>(state.start_time * 1000.0).ToLocalChecked());
-  obj->Set(Nan::New<String>("profileName").ToLocalChecked(), Nan::New<String>(state.profile_name).ToLocalChecked());
-  obj->Set(Nan::New<String>("samplesGathered").ToLocalChecked(), Nan::New<Number>(state.samples_gathered));
+  Nan::Set(obj, Nan::New<String>("enabled").ToLocalChecked(), Nan::New<Boolean>(state.enabled != 0));
+  Nan::Set(obj, Nan::New<String>("startTime").ToLocalChecked(), Nan::New<Date>(state.start_time * 1000.0).ToLocalChecked());
+  Nan::Set(obj, Nan::New<String>("profileName").ToLocalChecked(), Nan::New<String>(state.profile_name).ToLocalChecked());
+  Nan::Set(obj, Nan::New<String>("samplesGathered").ToLocalChecked(), Nan::New<Number>(state.samples_gathered));
 
   info.GetReturnValue().Set(obj);
 }
