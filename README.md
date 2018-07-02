@@ -43,6 +43,8 @@ This library is very rough, and only got light testing on mac OS High Sierra and
 
 By default the application will run with heap profiling disabled, this can be controlled by settingthe `HEAPPROFILE` environment variable to the prefix of the heap dumps to create.
 
+Alpine Linux/musl is not supported right now: See https://github.com/gperftools/gperftools/issues/693 for details and further links.
+
 ## License
 
 Apache-2.0.
