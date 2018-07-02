@@ -267,6 +267,13 @@ function getProfile(req, res) {
 	const {query} = url.parse(req.url, true);
 
 	// TODO: Check whether the profiler is currently running
+	const state = gperftools.ProfilerGetCurrentState();
+	if (state.enabled) {
+		logger.warn(`Profiler already running since ${state.startTime} (${state.profileName}, ${state.samplesGathered} samples gathered)`);
+		res.statusCode = 409;
+		res.end(`Profiler already running since ${state.startTime}`);
+		return;
+	}
 	tmpName((err, path) => {
 		if (err) {
 			logger.warn(`Cannot create profile: ${err.message}`);

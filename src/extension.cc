@@ -16,6 +16,8 @@ using v8::Isolate;
 using v8::Local;
 using v8::Object;
 using v8::Boolean;
+using v8::Date;
+using v8::Number;
 using v8::String;
 using v8::Value;
 
@@ -77,6 +79,21 @@ NAN_METHOD(ProfilerStop) {
   gperftools::ProfilerStop();
 }
 
+NAN_METHOD(ProfilerGetCurrentState) {
+  gperftools::ProfilerState state;
+  gperftools::ProfilerGetCurrentState(&state);
+
+  auto isolate = v8::Isolate::GetCurrent();
+  Local<Object> obj = Object::New(isolate);
+
+  obj->Set(Nan::New<String>("enabled").ToLocalChecked(), Nan::New<Boolean>(state.enabled != 0));
+  obj->Set(Nan::New<String>("startTime").ToLocalChecked(), Nan::New<Date>(state.start_time * 1000.0).ToLocalChecked());
+  obj->Set(Nan::New<String>("profileName").ToLocalChecked(), Nan::New<String>(state.profile_name).ToLocalChecked());
+  obj->Set(Nan::New<String>("samplesGathered").ToLocalChecked(), Nan::New<Number>(state.samples_gathered));
+
+  info.GetReturnValue().Set(obj);
+}
+
 NAN_MODULE_INIT(Initialize) {
   // malloc extensions (many missing)
   NAN_EXPORT(target, GetHeapSample);
@@ -91,6 +108,7 @@ NAN_MODULE_INIT(Initialize) {
   // profiler
   NAN_EXPORT(target, ProfilerStart);
   NAN_EXPORT(target, ProfilerStop);
+  NAN_EXPORT(target, ProfilerGetCurrentState);
 }
 
 NODE_MODULE(NODE_GYP_MODULE_NAME, Initialize)
