@@ -1,6 +1,6 @@
 {
   "name": "node-remote-pprof",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Support for google-perftools remote profiling with NodeJS",
   "main": "index.js",
   "scripts": {
