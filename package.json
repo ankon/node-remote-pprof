@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js sample",
+    "prepublishOnly": "git status --porcelain | grep '??' 2>/dev/null; test $? -eq 1",
     "test": "echo 'No tests (yet)'"
   },
   "repository": {
