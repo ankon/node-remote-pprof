@@ -304,17 +304,12 @@ async function postSymbol(req, res) {
 		bodyChunks.push(data);
 	});
 	req.on('end', async() => {
-		try {
-			const addresses = bodyChunks.join('').split('+');
+		const addresses = bodyChunks.join('').split('+');
 
-			const resolved = await resolveAddresses(addresses);
-			res.statusCode = 200;
-			const output = Array.from(resolved.entries()).map(keyValue => `${keyValue[0]}\t${keyValue[1]}`).join('\n');
-			res.end(output);
-		} catch (err) {
-			res.statusCode = 500;
-			res.end(err.message);
-		}
+		const resolved = await resolveAddresses(addresses);
+		res.statusCode = 200;
+		const output = Array.from(resolved.entries()).map(keyValue => `${keyValue[0]}\t${keyValue[1]}`).join('\n');
+		res.end(output);
 	});
 }
 
