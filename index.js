@@ -329,7 +329,7 @@ async function postSymbol(req, res) {
  * @return {Router} a router handling the /pprof requests
  */
 function pprof() {
-	const router = new Router();
+	const router = Router({});
 	router.get('/heap', getHeap);
 	router.get('/growth', getGrowth);
 	router.get('/profile', getProfile);
