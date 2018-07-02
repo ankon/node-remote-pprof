@@ -3,9 +3,6 @@
  *
  * This is based on the description in http://gperftools.github.io/gperftools/pprof_remote_servers.html,
  * and right now is incomplete, sketchy, slow, and likely only useful in our context.
- *
- * Eventually this should be pulled into a separate middleware-ish library for Express though, so that
- * it can be open-sourced.
  */
 const gperftools = require('bindings')('addon.node');
 
