@@ -69,7 +69,8 @@ NAN_METHOD(ProfilerStart) {
     return Nan::ThrowTypeError("arg must be a non-empty string");
   }
 
-  gperftools::ProfilerStart(*filename);
+  int result = gperftools::ProfilerStart(*filename);
+  info.GetReturnValue().Set(Nan::New<Boolean>(result != 0));
 }
 
 NAN_METHOD(ProfilerStop) {
