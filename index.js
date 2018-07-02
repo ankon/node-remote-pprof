@@ -54,7 +54,7 @@ function spawnHelper(command, args) {
  * inline that into a native extension and call whatever functions addr2line calls.
  */
 async function addr2line(addresses) {
-	const output = await spawnHelper('add2line', ['-C', '-f', '-s', '-e', '/proc/self/exe', ...addresses]);
+	const output = await spawnHelper('addr2line', ['-C', '-f', '-s', '-e', '/proc/self/exe', ...addresses]);
 
 	// Things worked, so split stuff: We get two lines of output per address.
 	// The first line is the function, or '??', the second is the location (could also be '??:0' or '??:?' even)
